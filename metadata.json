@@ -1,0 +1,8 @@
+{
+  "name": "Rigpilot",
+  "description": "Rigpilot shows small fleet owners exactly what idle machines cost in labor — and how one operator could cover three seats.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

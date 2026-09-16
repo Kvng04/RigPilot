@@ -1,0 +1,254 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Founding-fleet early access lead captures from landing page",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "The user's email address"
+        },
+        "source": {
+          "type": "string",
+          "description": "Which CTA button on the page triggered the capture"
+        },
+        "pricingTier": {
+          "type": "string",
+          "description": "Selected pricing tier if submitted from a pricing tier button"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp of when the signup occurred"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server timestamp or ISO date"
+        }
+      },
+      "required": ["email", "timestamp", "source"]
+    },
+    "AppSettings": {
+      "title": "AppSettings",
+      "description": "Launch HQ configuration and owner settings document",
+      "type": "object",
+      "properties": {
+        "ownerUid": {
+          "type": "string",
+          "description": "Firebase Auth UID of the verified app owner"
+        },
+        "ownerEmail": {
+          "type": "string",
+          "description": "Email address of the owner"
+        },
+        "claimedAt": {
+          "type": "string",
+          "description": "ISO timestamp when the dashboard was first claimed"
+        },
+        "liveUrl": {
+          "type": "string",
+          "description": "The public URL for this launch page"
+        },
+        "visitorCount": {
+          "type": "number",
+          "description": "Estimated visitor count for conversion metric calculations"
+        },
+        "checklist": {
+          "type": "object",
+          "description": "Checklist progress mapping"
+        }
+      },
+      "required": ["ownerUid", "ownerEmail", "claimedAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Fleet owner user profile data (tolerates null displayName)",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Optional user display name"
+        },
+        "companyName": {
+          "type": "string",
+          "description": "Construction company or fleet name"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of account creation"
+        }
+      },
+      "required": ["uid", "email"]
+    },
+    "Audit": {
+      "title": "Audit",
+      "description": "Telematics shift log audit result and idle cost calculation",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique audit ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Shift audit title or date descriptor"
+        },
+        "siteName": {
+          "type": "string",
+          "description": "Job site or quarry location name"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp"
+        },
+        "totalShiftCost": {
+          "type": "number",
+          "description": "Total operator payroll + fuel expenditure"
+        },
+        "activeWorkCost": {
+          "type": "number",
+          "description": "Productive cycle dollar value"
+        },
+        "idlePayrollWaste": {
+          "type": "number",
+          "description": "Wasted labor dollars from idle standby"
+        },
+        "efficiencyPercentage": {
+          "type": "number",
+          "description": "Percentage of shift spent in active productive cut time"
+        },
+        "monthlyLossProjection": {
+          "type": "number",
+          "description": "Projected monthly loss if idle rate continues"
+        },
+        "remoteConsolidationPotential": {
+          "type": "number",
+          "description": "Estimated monthly savings from 1 remote operator covering 3 machines"
+        },
+        "machineBreakdown": {
+          "type": "array",
+          "description": "Array of per-machine telemetry audit items"
+        },
+        "recommendations": {
+          "type": "array",
+          "description": "Array of actionable recommendations"
+        },
+        "summary": {
+          "type": "string",
+          "description": "Executive summary brief"
+        }
+      },
+      "required": ["userId", "timestamp", "idlePayrollWaste", "efficiencyPercentage"]
+    },
+    "Machine": {
+      "title": "Machine",
+      "description": "Construction fleet machine inventory item",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique machine ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID"
+        },
+        "unitNumber": {
+          "type": "string",
+          "description": "Unit ID (e.g. EX-04, DZ-02)"
+        },
+        "makeModel": {
+          "type": "string",
+          "description": "Make and model (e.g. Cat 336 Excavator)"
+        },
+        "category": {
+          "type": "string",
+          "description": "Machine category (excavator, dozer, loader, grader, haul_truck)"
+        },
+        "assignedSite": {
+          "type": "string",
+          "description": "Current assigned job site"
+        },
+        "hourlyOperatorRate": {
+          "type": "number",
+          "description": "Operator hourly loaded wage ($/hr)"
+        },
+        "hourlyFuelBurn": {
+          "type": "number",
+          "description": "Estimated fuel cost per hour ($/hr)"
+        },
+        "remoteRetrofitReady": {
+          "type": "boolean",
+          "description": "Whether machine has CAN bus / remote pilot compatibility"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp"
+        }
+      },
+      "required": ["userId", "unitNumber", "makeModel", "category"]
+    },
+    "UserEvent": {
+      "title": "UserEvent",
+      "description": "Product analytics and milestone tracking event",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User ID or anonymous session ID"
+        },
+        "eventName": {
+          "type": "string",
+          "description": "Event name (signup, hero_feature_used, pricing_viewed, checkout_clicked)"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Event metadata"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp"
+        }
+      },
+      "required": ["eventName", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "entity": "Lead",
+      "description": "Anonymous lead captures for founding fleet early access"
+    },
+    "/settings/{settingId}": {
+      "entity": "AppSettings",
+      "description": "Launch HQ configuration and owner settings document"
+    },
+    "/users/{userId}/profile": {
+      "entity": "UserProfile",
+      "description": "User profile with tolerant null displayName support"
+    },
+    "/users/{userId}/audits/{auditId}": {
+      "entity": "Audit",
+      "description": "Shift telemetry and idle-cost diagnostic reports"
+    },
+    "/users/{userId}/machines/{machineId}": {
+      "entity": "Machine",
+      "description": "Fleet machinery items"
+    },
+    "/users/{userId}/events/{eventId}": {
+      "entity": "UserEvent",
+      "description": "Analytics tracking events"
+    }
+  }
+}
